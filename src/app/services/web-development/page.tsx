@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -194,7 +195,7 @@ export default function WebDevelopmentPage() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <feature.icon className="w-12 h-12 text-ryx-gold mb-6" />
+                  <Globe className="w-12 h-12 text-ryx-gold mb-6" />
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
                 </motion.div>

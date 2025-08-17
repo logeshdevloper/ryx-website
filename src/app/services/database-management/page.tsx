@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -13,38 +14,32 @@ export const metadata: Metadata = {
 
 const features = [
   {
-    icon: Database,
     title: "Database Design & Setup",
     description: "Optimized schema tailored to your application's needs."
   },
   {
-    icon: Zap,
     title: "Performance Optimization", 
     description: "Faster queries, better indexes, reduced load time."
   },
   {
-    icon: Shield,
     title: "Backup & Disaster Recovery",
     description: "Automated, encrypted backups with instant restore."
   },
   {
-    icon: Shield,
     title: "Data Security",
     description: "Encryption, role-based access, and compliance protocols."
   },
   {
-    icon: TrendingUp,
     title: "Migration Services",
     description: "Smooth transitions between database platforms."
   },
   {
-    icon: Clock,
     title: "Monitoring & Maintenance",
     description: "Real-time tracking and proactive fixes."
   }
 ];
 
-const process = [
+const processSteps = [
   { step: "01", title: "Assessment", description: "Review current setup and requirements." },
   { step: "02", title: "Architecture Design", description: "Create scalable structure." },
   { step: "03", title: "Implementation", description: "Build, migrate, or optimize." },
@@ -185,7 +180,7 @@ export default function DatabaseManagementPage() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
-                  <feature.icon className="w-12 h-12 text-ryx-gold mb-6" />
+                  <Database className="w-12 h-12 text-ryx-gold mb-6" />
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{feature.title}</h3>
                   <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
                 </motion.div>
@@ -208,7 +203,7 @@ export default function DatabaseManagementPage() {
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-              {process.map((step, index) => (
+              {processSteps.map((step, index) => (
                 <motion.div
                   key={step.step}
                   initial={{ opacity: 0, y: 30 }}
