@@ -228,6 +228,7 @@ NEXT_PUBLIC_CONTACT_API_URL=your_api_endpoint
 - Color contrast validation
 - Reduced motion preferences
 
+
 ## 🛡 Security
 
 ### Headers
