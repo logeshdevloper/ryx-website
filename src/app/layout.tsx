@@ -4,7 +4,6 @@ import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import "./globals.css";
-import { CursorRing } from "@/components/ui/cursor-ring";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -127,7 +126,6 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange={false}
         >
-          <CursorRing />
           {children}
           <Toaster richColors position="top-right" />
         </ThemeProvider>

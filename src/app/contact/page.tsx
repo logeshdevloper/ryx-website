@@ -1,159 +1,230 @@
-import type { Metadata } from "next";
-import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-import { ContactForm } from "@/components/sections/contact-form";
-import { Mail, Clock, MapPin, Phone } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+"use client"
 
-export const metadata: Metadata = {
-  title: "Contact RYX - Get Your Project Started Today",
-  description: "Ready to build your micro SaaS, optimize your database, or develop AI solutions? Contact RYX for a free consultation and project estimate.",
-};
-
-const contactInfo = [
-  {
-    icon: Mail,
-    title: "Email",
-    content: "hello@ryx.dev",
-    description: "We&apos;ll respond within 24 hours",
-  },
-  {
-    icon: Clock,
-    title: "Response Time",
-    content: "< 24 hours",
-    description: "Quick turnaround on all inquiries",
-  },
-  {
-    icon: MapPin,
-    title: "Location",
-    content: "Remote First",
-    description: "Working with clients worldwide",
-  },
-  {
-    icon: Phone,
-    title: "Consultation",
-    content: "Free 30-min call",
-    description: "Discuss your project requirements",
-  },
-];
+import { NavbarMinimal } from "@/components/layout/navbar-minimal"
+import { FooterMinimal } from "@/components/layout/footer-minimal"
+import { AnimatedCursor } from "@/components/ui/animated-cursor"
+import { motion } from "framer-motion"
+import { Mail, Phone, MapPin, Send, Sparkles } from "lucide-react"
+import { useState } from "react"
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          ...formData,
+          from_name: formData.name,
+          subject: `New Contact from ${formData.name}`,
+        })
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        setSubmitStatus("success")
+        setFormData({ name: "", email: "", message: "" })
+        setTimeout(() => setSubmitStatus("idle"), 5000)
+      } else {
+        setSubmitStatus("error")
+        setTimeout(() => setSubmitStatus("idle"), 5000)
+      }
+    } catch (error) {
+      setSubmitStatus("error")
+      setTimeout(() => setSubmitStatus("idle"), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <>
-      <Navbar />
-      <main className="pt-16">
+      <AnimatedCursor />
+      <NavbarMinimal />
+      <main className="min-h-screen pt-20">
         {/* Hero Section */}
-        <section className="py-24 bg-gradient-to-br from-background via-ryx-silver/20 to-ryx-gold/10 dark:from-ryx-navy dark:via-ryx-navy-light/20 dark:to-ryx-navy-dark/40">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-              Let&apos;s Build Something{" "}
-              <span className="text-gradient">
-                Amazing
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Ready to turn your idea into a production-ready solution? Get in touch and let&apos;s 
-              discuss how we can help you scale.
-            </p>
+        <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950">
+          <div className="container mx-auto px-6 md:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-12"
+            >
+              <motion.div
+                className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/10 backdrop-blur rounded-full"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Sparkles className="w-4 h-4 text-violet-400" />
+                <span className="text-sm font-semibold text-white">Get In Touch</span>
+              </motion.div>
+
+              <h1 className="text-5xl md:text-6xl font-bold mb-4">
+                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                  Let's Work Together
+                </span>
+              </h1>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                Have a project in mind? We'd love to hear about it.
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* Contact Section */}
-        <section className="py-24 bg-background">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        {/* Contact Form & Info */}
+        <section className="py-20 bg-gray-950">
+          <div className="container mx-auto px-6 md:px-12">
+            <div className="grid lg:grid-cols-2 gap-12">
               {/* Contact Info */}
-              <div>
-                <h2 className="text-3xl font-bold text-foreground mb-8">
-                  Get in Touch
-                </h2>
-                <p className="text-lg text-muted-foreground mb-12">
-                  Whether you need database optimization, web development, or a complete micro SaaS solution, 
-                  we&apos;re here to help. Reach out and let&apos;s start the conversation.
-                </p>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <h2 className="text-3xl font-bold text-white mb-8">Contact Information</h2>
 
-                <div className="space-y-8">
-                  {contactInfo.map((item, index) => (
-                    <Card key={index} className="border-0 shadow-sm hover:shadow-md transition-shadow">
-                      <CardContent className="p-6">
-                        <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <item.icon className="w-6 h-6 text-primary" />
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-foreground mb-1">
-                              {item.title}
-                            </h3>
-                            <p className="text-primary font-medium mb-1">
-                              {item.content}
-                            </p>
-                            <p className="text-muted-foreground text-sm">
-                              {item.description}
-                            </p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white mb-1">Email</h3>
+                      <p className="text-gray-400">ryxdevsolution@gmail.com</p>
+                      <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
+                    </div>
+                  </div>
 
-                {/* FAQ */}
-                <div className="mt-16">
-                  <h3 className="text-xl font-bold text-foreground mb-6">
-                    Frequently Asked Questions
-                  </h3>
-                  <div className="space-y-6">
-                    <Card className="border-0 shadow-sm">
-                      <CardContent className="p-6">
-                        <h4 className="font-semibold text-foreground mb-2">
-                          How long does a typical project take?
-                        </h4>
-                        <p className="text-muted-foreground">
-                          Most projects are completed in 2-8 weeks, depending on complexity. 
-                          We provide detailed timelines during our initial consultation.
-                        </p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border-0 shadow-sm">
-                      <CardContent className="p-6">
-                        <h4 className="font-semibold text-foreground mb-2">
-                          Do you work with existing codebases?
-                        </h4>
-                        <p className="text-muted-foreground">
-                          Absolutely! We can optimize, enhance, or migrate your existing applications 
-                          to modern tech stacks and best practices.
-                        </p>
-                      </CardContent>
-                    </Card>
-                    <Card className="border-0 shadow-sm">
-                      <CardContent className="p-6">
-                        <h4 className="font-semibold text-foreground mb-2">
-                          What&apos;s included in ongoing support?
-                        </h4>
-                        <p className="text-muted-foreground">
-                          We offer maintenance, monitoring, updates, and feature additions. 
-                          Support packages are tailored to your specific needs.
-                        </p>
-                      </CardContent>
-                    </Card>
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white mb-1">Phone</h3>
+                      <p className="text-gray-400">+91 86725 80008</p>
+                      <p className="text-gray-400">+91 63748 53277</p>
+                      <p className="text-sm text-gray-500 mt-1">Mon-Sat 9am to 6pm IST</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-pink-600 to-rose-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white mb-1">Office</h3>
+                      <p className="text-gray-400">San Francisco, CA</p>
+                      <p className="text-sm text-gray-500 mt-1">123 Innovation Street</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Contact Form */}
-              <Card className="shadow-lg border-0 bg-card/50 backdrop-blur-sm">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-bold text-foreground mb-6">
-                    Start Your Project
-                  </h3>
-                  <ContactForm />
-                </CardContent>
-              </Card>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      required
+                      rows={5}
+                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors resize-none"
+                      placeholder="Tell us about your project..."
+                    />
+                  </div>
+
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    {isSubmitting ? (
+                      "Sending..."
+                    ) : (
+                      <span className="flex items-center justify-center gap-2">
+                        Send Message
+                        <Send className="w-5 h-5" />
+                      </span>
+                    )}
+                  </motion.button>
+
+                  {/* Status Messages */}
+                  {submitStatus === "success" && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-green-400 text-center"
+                    >
+                      Message sent successfully! We'll get back to you soon.
+                    </motion.p>
+                  )}
+
+                  {submitStatus === "error" && (
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-400 text-center"
+                    >
+                      Something went wrong. Please try again.
+                    </motion.p>
+                  )}
+                </form>
+              </motion.div>
             </div>
           </div>
         </section>
       </main>
-      <Footer />
+      <FooterMinimal />
     </>
-  );
+  )
 }
