@@ -9,6 +9,8 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 // Top-tier SEO metadata
@@ -124,7 +126,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem={true}
-          disableTransitionOnChange={false}
+          disableTransitionOnChange={true}
         >
           {children}
           <Toaster richColors position="top-right" />

@@ -187,19 +187,61 @@
     @apply gap-4 sm:gap-6 md:gap-8 lg:gap-12;
   }
 
-  /* Animated gradient */
+  /* Animated gradient - Professional and smooth */
   @keyframes gradient {
-    0% { background-position: 0% 50%; }
+    0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
 
   .animate-gradient {
-    animation: gradient 3s ease infinite;
+    background-size: 200% 200%;
+    animation: gradient 8s ease-in-out infinite;
   }
 
   .bg-300\% {
     background-size: 300% 300%;
+  }
+
+  /* Floating animation for orbs */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-20px) translateX(10px); }
+    66% { transform: translateY(10px) translateX(-10px); }
+  }
+
+  .animate-float {
+    animation: float 20s ease-in-out infinite;
+  }
+
+  /* Glow effect */
+  @keyframes glow {
+    0%, 100% { opacity: 0.5; filter: blur(40px); }
+    50% { opacity: 0.8; filter: blur(60px); }
+  }
+
+  .animate-glow {
+    animation: glow 4s ease-in-out infinite;
+  }
+
+  /* Performance optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   /* Reduce motion */

@@ -5,45 +5,13 @@ import { FooterMinimal } from "@/components/layout/footer-minimal";
 import { AnimatedCursor } from "@/components/ui/animated-cursor";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Sphere, Box, Cone, MeshDistortMaterial, Float } from "@react-three/drei";
 import Tilt from "react-parallax-tilt";
 import {
   Code, Database, Palette, Cpu, Smartphone, Globe,
   Layers, Zap, Shield, Rocket, CheckCircle, ArrowRight,
   BarChart, Users, Clock, Award
 } from "lucide-react";
-import { Suspense } from "react";
 import Image from "next/image";
-
-// 3D Scene Component
-function ServiceScene() {
-  return (
-    <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-
-      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
-        <Sphere args={[1.5, 32, 32]} position={[-3, 0, 0]}>
-          <MeshDistortMaterial color="#8B5CF6" attach="material" distort={0.6} speed={2} />
-        </Sphere>
-      </Float>
-
-      <Float speed={2} rotationIntensity={1.5} floatIntensity={1.5}>
-        <Box args={[2, 2, 2]} position={[3, 0, 0]}>
-          <MeshDistortMaterial color="#EC4899" attach="material" distort={0.4} speed={3} />
-        </Box>
-      </Float>
-
-      <Float speed={3} rotationIntensity={2} floatIntensity={1}>
-        <Cone args={[1.5, 3, 32]} position={[0, 0, -3]}>
-          <MeshDistortMaterial color="#10B981" attach="material" distort={0.5} speed={1.5} />
-        </Cone>
-      </Float>
-    </>
-  );
-}
 
 const mainServices = [
   {
@@ -211,30 +179,32 @@ export default function ServicesPage() {
       <AnimatedCursor />
       <NavbarMinimal />
       <main ref={containerRef} className="min-h-screen">
-        {/* Hero Section with 3D Background */}
-        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-          {/* 3D Background */}
-          <div className="absolute inset-0 z-0">
-            <Canvas camera={{ position: [0, 0, 8] }}>
-              <Suspense fallback={null}>
-                <ServiceScene />
-              </Suspense>
-            </Canvas>
+        {/* Hero Section with Floating Gradient Orbs */}
+        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+          {/* Beautiful floating gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Top left - Blue to Violet */}
+            <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full opacity-20 blur-3xl animate-float" />
+
+            {/* Top right - Purple to Pink */}
+            <div className="absolute top-20 -right-20 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-25 blur-3xl animate-float"
+                 style={{ animationDelay: '2s', animationDuration: '25s' }} />
+
+            {/* Center - Violet glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-300 to-fuchsia-400 rounded-full opacity-15 blur-3xl animate-pulse"
+                 style={{ animationDuration: '10s' }} />
+
+            {/* Bottom left - Pink to Orange */}
+            <div className="absolute bottom-0 left-20 w-72 h-72 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '4s', animationDuration: '30s' }} />
+
+            {/* Bottom right - Blue accent */}
+            <div className="absolute -bottom-20 -right-10 w-64 h-64 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '1s', animationDuration: '22s' }} />
           </div>
 
-          {/* Gradient Overlay */}
-          <motion.div
-            className="absolute inset-0 z-10"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 80%, rgba(139,92,246,0.2) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(236,72,153,0.2) 0%, transparent 50%)",
-                "radial-gradient(circle at 50% 50%, rgba(16,185,129,0.2) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(139,92,246,0.2) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          />
+          {/* Subtle light overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-purple-50/30 z-10" />
 
           {/* Content */}
           <div className="container mx-auto px-6 md:px-12 relative z-20 text-center">
@@ -244,7 +214,7 @@ export default function ServicesPage() {
               transition={{ duration: 0.8 }}
             >
               <motion.span
-                className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-semibold rounded-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-xl"
+                className="inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-semibold rounded-full bg-white/80 backdrop-blur-lg shadow-xl border border-violet-100"
                 whileHover={{ scale: 1.05 }}
               >
                 <Zap className="w-4 h-4 text-violet-600" />
@@ -254,7 +224,7 @@ export default function ServicesPage() {
               </motion.span>
 
               <motion.h1
-                className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8"
+                className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-gray-900"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -278,7 +248,7 @@ export default function ServicesPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto"
+                className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto"
               >
                 From concept to launch, we deliver exceptional digital solutions that drive growth and innovation
               </motion.p>
@@ -287,7 +257,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Main Services Grid */}
-        <section className="py-32 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
+        <section className="py-32 bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50">
           <div className="container mx-auto px-6 md:px-12">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -300,7 +270,7 @@ export default function ServicesPage() {
                   What We Offer
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
                 Comprehensive digital services tailored to your needs
               </p>
             </motion.div>
@@ -323,7 +293,7 @@ export default function ServicesPage() {
                     scale={1.02}
                   >
                     <motion.div
-                      className="relative h-full bg-white dark:bg-gray-900 rounded-3xl overflow-hidden shadow-xl group"
+                      className="relative h-full bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden shadow-xl border border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-200/50 group transition-all duration-300"
                       whileHover={{ y: -10 }}
                     >
                       {/* Image */}
@@ -353,7 +323,7 @@ export default function ServicesPage() {
 
                         {/* Price Badge */}
                         <motion.div
-                          className="absolute bottom-4 left-4 px-3 py-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md rounded-full"
+                          className="absolute bottom-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-md rounded-full border border-violet-100"
                           initial={{ x: -100, opacity: 0 }}
                           animate={hoveredService === index ? { x: 0, opacity: 1 } : {}}
                           transition={{ duration: 0.3 }}
@@ -369,7 +339,7 @@ export default function ServicesPage() {
                         <h3 className={`text-2xl font-bold mb-3 bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`}>
                           {service.title}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-400 mb-6">
+                        <p className="text-gray-700 mb-6">
                           {service.description}
                         </p>
 
@@ -381,7 +351,7 @@ export default function ServicesPage() {
                               initial={{ opacity: 0, x: -20 }}
                               animate={hoveredService === index ? { opacity: 1, x: 0 } : { opacity: 0.7, x: 0 }}
                               transition={{ duration: 0.3, delay: i * 0.1 }}
-                              className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
+                              className="flex items-center gap-2 text-sm text-gray-700"
                             >
                               <CheckCircle className="w-4 h-4 text-green-500" />
                               {feature}
@@ -435,7 +405,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Process Section */}
-        <section className="py-32 bg-white dark:bg-gray-950 relative overflow-hidden">
+        <section className="py-32 bg-gradient-to-br from-pink-50 to-orange-50 relative overflow-hidden">
           <motion.div
             style={{ y }}
             className="absolute inset-0"
@@ -443,7 +413,7 @@ export default function ServicesPage() {
             {[...Array(30)].map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1 h-1 bg-violet-400 dark:bg-violet-600 rounded-full"
+                className="absolute w-1 h-1 bg-violet-400 rounded-full"
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
@@ -473,7 +443,7 @@ export default function ServicesPage() {
                   Our Process
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
                 A proven methodology that ensures project success
               </p>
             </motion.div>
@@ -488,8 +458,8 @@ export default function ServicesPage() {
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                 >
                   <motion.div
-                    className="relative p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl group"
-                    whileHover={{ y: -10, boxShadow: "0 25px 50px rgba(139, 92, 246, 0.2)" }}
+                    className="relative p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-200/50 group transition-all duration-300"
+                    whileHover={{ y: -10 }}
                   >
                     {/* Step Number */}
                     <motion.div
@@ -509,8 +479,8 @@ export default function ServicesPage() {
                       <item.icon className="w-8 h-8 text-white" />
                     </motion.div>
 
-                    <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.title}</h3>
+                    <p className="text-gray-700">
                       {item.description}
                     </p>
                   </motion.div>
@@ -521,7 +491,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+        <section className="py-32 bg-gradient-to-b from-orange-50 to-purple-50">
           <div className="container mx-auto px-6 md:px-12">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -534,7 +504,7 @@ export default function ServicesPage() {
                   Pricing Plans
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
                 Transparent pricing with no hidden fees
               </p>
             </motion.div>
@@ -555,9 +525,9 @@ export default function ServicesPage() {
                     scale={plan.popular ? 1.05 : 1.02}
                   >
                     <motion.div
-                      className={`relative h-full p-8 bg-white dark:bg-gray-900 rounded-3xl shadow-xl ${
-                        plan.popular ? 'ring-4 ring-violet-600 ring-offset-4' : ''
-                      }`}
+                      className={`relative h-full p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border ${
+                        plan.popular ? 'border-violet-300 ring-4 ring-violet-600 ring-offset-4' : 'border-violet-100 hover:border-violet-300'
+                      } hover:shadow-2xl hover:shadow-violet-200/50 transition-all duration-300`}
                       whileHover={{ y: -10 }}
                     >
                       {plan.popular && (
@@ -571,11 +541,11 @@ export default function ServicesPage() {
                       </h3>
 
                       <div className="mb-4">
-                        <span className="text-5xl font-bold">{plan.price}</span>
-                        {plan.price !== "Custom" && <span className="text-gray-600 dark:text-gray-400">/project</span>}
+                        <span className="text-5xl font-bold text-gray-900">{plan.price}</span>
+                        {plan.price !== "Custom" && <span className="text-gray-700">/project</span>}
                       </div>
 
-                      <p className="text-gray-600 dark:text-gray-400 mb-8">
+                      <p className="text-gray-700 mb-8">
                         {plan.description}
                       </p>
 
@@ -589,7 +559,7 @@ export default function ServicesPage() {
                             className="flex items-start gap-2 text-sm"
                           >
                             <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
-                            <span className="text-gray-600 dark:text-gray-400">{feature}</span>
+                            <span className="text-gray-700">{feature}</span>
                           </motion.li>
                         ))}
                       </ul>
@@ -599,7 +569,7 @@ export default function ServicesPage() {
                         className={`block w-full py-3 text-center font-semibold rounded-full transition-all ${
                           plan.popular
                             ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white hover:shadow-lg'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
+                            : 'bg-violet-100 text-gray-900 hover:bg-violet-200 border border-violet-200'
                         }`}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -664,8 +634,15 @@ export default function ServicesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-white dark:bg-gray-950">
-          <div className="container mx-auto px-6 md:px-12 text-center">
+        <section className="py-32 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+          {/* Floating gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full opacity-20 blur-3xl animate-float" />
+            <div className="absolute bottom-20 right-20 w-72 h-72 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '3s' }} />
+          </div>
+
+          <div className="container mx-auto px-6 md:px-12 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -676,7 +653,7 @@ export default function ServicesPage() {
                   Ready to Get Started?
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
+              <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-12">
                 Let's discuss your project and see how we can help you achieve your goals
               </p>
               <motion.a

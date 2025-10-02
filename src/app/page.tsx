@@ -1,25 +1,35 @@
 "use client"
 
-import { Hero3D } from '@/components/sections/hero-3d'
-import { ServicesSimple } from '@/components/sections/services-simple'
-import { PortfolioSimple } from '@/components/sections/portfolio-simple'
-import { ContactMinimal } from '@/components/sections/contact-minimal'
-import { FooterMinimal } from '@/components/layout/footer-minimal'
+import dynamic from 'next/dynamic'
 import { NavbarMinimal } from '@/components/layout/navbar-minimal'
-import { AnimatedCursor } from '@/components/ui/animated-cursor'
-import { useState, useEffect } from 'react'
+import { FooterMinimal } from '@/components/layout/footer-minimal'
+
+// Lazy load heavy components for better performance
+const AnimatedCursor = dynamic(() => import('@/components/ui/animated-cursor').then(mod => ({ default: mod.AnimatedCursor })), {
+  ssr: false,
+})
+
+const SmartChatbot = dynamic(() => import('@/components/ui/smart-chatbot').then(mod => ({ default: mod.SmartChatbot })), {
+  ssr: false,
+})
+
+const Hero3D = dynamic(() => import('@/components/sections/hero-3d').then(mod => ({ default: mod.Hero3D })), {
+  ssr: false,
+})
+
+const ServicesSimple = dynamic(() => import('@/components/sections/services-simple').then(mod => ({ default: mod.ServicesSimple })), {
+  ssr: true,
+})
+
+const PortfolioSimple = dynamic(() => import('@/components/sections/portfolio-simple').then(mod => ({ default: mod.PortfolioSimple })), {
+  ssr: true,
+})
+
+const ContactMinimal = dynamic(() => import('@/components/sections/contact-minimal').then(mod => ({ default: mod.ContactMinimal })), {
+  ssr: true,
+})
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null // Return null for faster initial load
-  }
-
   return (
     <>
       <AnimatedCursor />
@@ -31,6 +41,7 @@ export default function Home() {
         <ContactMinimal />
       </main>
       <FooterMinimal />
+      <SmartChatbot />
     </>
   )
 }

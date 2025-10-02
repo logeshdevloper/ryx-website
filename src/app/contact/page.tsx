@@ -58,9 +58,18 @@ export default function ContactPage() {
       <AnimatedCursor />
       <NavbarMinimal />
       <main className="min-h-screen pt-20">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950">
-          <div className="container mx-auto px-6 md:px-12">
+        {/* Hero Section with Floating Gradient Orbs */}
+        <section className="py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+          {/* Beautiful floating gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full opacity-20 blur-3xl animate-float" />
+            <div className="absolute top-20 -right-20 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-25 blur-3xl animate-float"
+                 style={{ animationDelay: '2s', animationDuration: '25s' }} />
+            <div className="absolute bottom-0 left-20 w-72 h-72 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '4s', animationDuration: '30s' }} />
+          </div>
+
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -68,19 +77,19 @@ export default function ContactPage() {
               className="text-center mb-12"
             >
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/10 backdrop-blur rounded-full"
+                className="inline-flex items-center gap-2 px-4 py-2 mb-6 bg-white/80 backdrop-blur-md rounded-full border border-violet-100 shadow-xl"
                 whileHover={{ scale: 1.05 }}
               >
-                <Sparkles className="w-4 h-4 text-violet-400" />
-                <span className="text-sm font-semibold text-white">Get In Touch</span>
+                <Sparkles className="w-4 h-4 text-violet-600" />
+                <span className="text-sm font-semibold bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Get In Touch</span>
               </motion.div>
 
               <h1 className="text-5xl md:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
                   Let's Work Together
                 </span>
               </h1>
-              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-2xl mx-auto">
                 Have a project in mind? We'd love to hear about it.
               </p>
             </motion.div>
@@ -88,8 +97,31 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form & Info */}
-        <section className="py-20 bg-gray-950">
-          <div className="container mx-auto px-6 md:px-12">
+        <section className="py-20 bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50 relative overflow-hidden">
+          {/* Floating particles */}
+          <div className="absolute inset-0">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-violet-400 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 5,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Contact Info */}
               <motion.div
@@ -98,40 +130,40 @@ export default function ContactPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <h2 className="text-3xl font-bold text-white mb-8">Contact Information</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-8">Contact Information</h2>
 
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
                       <Mail className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white mb-1">Email</h3>
-                      <p className="text-gray-400">ryxdevsolution@gmail.com</p>
-                      <p className="text-sm text-gray-500 mt-1">We'll respond within 24 hours</p>
+                      <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
+                      <p className="text-gray-700">ryxdevsolution@gmail.com</p>
+                      <p className="text-sm text-gray-600 mt-1">We'll respond within 24 hours</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
                       <Phone className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white mb-1">Phone</h3>
-                      <p className="text-gray-400">+91 86725 80008</p>
-                      <p className="text-gray-400">+91 63748 53277</p>
-                      <p className="text-sm text-gray-500 mt-1">Mon-Sat 9am to 6pm IST</p>
+                      <h3 className="font-semibold text-gray-900 mb-1">Phone</h3>
+                      <p className="text-gray-700">+91 86725 80008</p>
+                      <p className="text-gray-700">+91 63748 53277</p>
+                      <p className="text-sm text-gray-600 mt-1">Mon-Sat 9am to 6pm IST</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-pink-600 to-rose-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-pink-600 to-rose-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg">
                       <MapPin className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white mb-1">Office</h3>
-                      <p className="text-gray-400">San Francisco, CA</p>
-                      <p className="text-sm text-gray-500 mt-1">123 Innovation Street</p>
+                      <h3 className="font-semibold text-gray-900 mb-1">Office</h3>
+                      <p className="text-gray-700">San Francisco, CA</p>
+                      <p className="text-sm text-gray-600 mt-1">123 Innovation Street</p>
                     </div>
                   </div>
                 </div>
@@ -144,39 +176,39 @@ export default function ContactPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
               >
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-white/80 backdrop-blur-md p-8 rounded-3xl border border-violet-100 shadow-xl">
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                     <input
                       type="text"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors"
+                      className="w-full px-4 py-3 bg-white border border-violet-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-violet-600 focus:ring-2 focus:ring-violet-200 transition-all"
                       placeholder="Your name"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors"
+                      className="w-full px-4 py-3 bg-white border border-violet-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-violet-600 focus:ring-2 focus:ring-violet-200 transition-all"
                       placeholder="your@email.com"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
                     <textarea
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-violet-600 transition-colors resize-none"
+                      className="w-full px-4 py-3 bg-white border border-violet-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-violet-600 focus:ring-2 focus:ring-violet-200 transition-all resize-none"
                       placeholder="Tell us about your project..."
                     />
                   </div>
@@ -184,7 +216,7 @@ export default function ContactPage() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-violet-200/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -203,7 +235,7 @@ export default function ContactPage() {
                     <motion.p
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-green-400 text-center"
+                      className="text-green-600 text-center font-semibold"
                     >
                       Message sent successfully! We'll get back to you soon.
                     </motion.p>
@@ -213,7 +245,7 @@ export default function ContactPage() {
                     <motion.p
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-center"
+                      className="text-red-600 text-center font-semibold"
                     >
                       Something went wrong. Please try again.
                     </motion.p>

@@ -3,58 +3,36 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles, Zap } from 'lucide-react'
 import Link from 'next/link'
-import { Suspense } from 'react'
-import dynamic from 'next/dynamic'
 
-// Lazy load 3D components
-const Canvas = dynamic(() => import('@react-three/fiber').then(mod => mod.Canvas), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 bg-gray-900" />
-})
-
-const Float = dynamic(() => import('@react-three/drei').then(mod => mod.Float), { ssr: false })
-const OrbitControls = dynamic(() => import('@react-three/drei').then(mod => mod.OrbitControls), { ssr: false })
-const Sphere = dynamic(() => import('@react-three/drei').then(mod => mod.Sphere), { ssr: false })
-const Box = dynamic(() => import('@react-three/drei').then(mod => mod.Box), { ssr: false })
-const MeshDistortMaterial = dynamic(() => import('@react-three/drei').then(mod => mod.MeshDistortMaterial), { ssr: false })
-
-// Optimized 3D Scene with fewer objects
-function HeroScene() {
-  return (
-    <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-
-      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
-        <Sphere args={[1.5, 16, 16]} position={[-3, 0, 0]}>
-          <MeshDistortMaterial color="#8B5CF6" attach="material" distort={0.6} speed={2} />
-        </Sphere>
-      </Float>
-
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Box args={[2, 2, 2]} position={[3, 0, 0]}>
-          <MeshDistortMaterial color="#EC4899" attach="material" distort={0.4} speed={2} />
-        </Box>
-      </Float>
-    </>
-  )
-}
+// CSS-only animated gradient background (much faster than 3D)
 
 export function Hero3D() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950">
-      {/* Simplified 3D Background */}
-      <div className="absolute inset-0 z-0">
-        <Suspense fallback={<div className="absolute inset-0 bg-gray-900" />}>
-          <Canvas camera={{ position: [0, 0, 8] }} dpr={[1, 2]}>
-            <HeroScene />
-          </Canvas>
-        </Suspense>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      {/* Beautiful floating gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Top left - Blue to Violet */}
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full opacity-20 blur-3xl animate-float" />
+
+        {/* Top right - Purple to Pink */}
+        <div className="absolute top-20 -right-20 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-25 blur-3xl animate-float"
+             style={{ animationDelay: '2s', animationDuration: '25s' }} />
+
+        {/* Center - Violet glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-300 to-fuchsia-400 rounded-full opacity-15 blur-3xl animate-pulse"
+             style={{ animationDuration: '10s' }} />
+
+        {/* Bottom left - Pink to Orange */}
+        <div className="absolute bottom-0 left-20 w-72 h-72 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+             style={{ animationDelay: '4s', animationDuration: '30s' }} />
+
+        {/* Bottom right - Blue accent */}
+        <div className="absolute -bottom-20 -right-10 w-64 h-64 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-20 blur-3xl animate-float"
+             style={{ animationDelay: '1s', animationDuration: '22s' }} />
       </div>
 
-      {/* Simple gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-gray-900 z-10" />
+      {/* Subtle light overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-purple-50/30 z-10" />
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-20">
@@ -69,70 +47,72 @@ export function Hero3D() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 mb-6 sm:mb-8 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 mb-6 sm:mb-8 bg-white/80 backdrop-blur-md rounded-full border border-violet-200 shadow-lg shadow-violet-100"
           >
-            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-violet-400" />
-            <span className="text-xs sm:text-sm font-semibold text-white">Welcome to RYX</span>
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-violet-600" />
+            <span className="text-sm sm:text-base font-bold bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Welcome to RYX</span>
           </motion.div>
 
           {/* Main Heading */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 leading-tight"
           >
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-              Digital Innovation
+            <span className="inline-block bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent animate-gradient">
+              Transform Ideas
             </span>
             <br />
-            <span className="text-white">Made Simple</span>
+            <span className="text-gray-900 drop-shadow-sm">Into Reality</span>
           </motion.h1>
 
           {/* Description */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-12 px-4 sm:px-0"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto mb-10 sm:mb-14 px-4 sm:px-0 font-light leading-relaxed"
           >
-            We transform ideas into powerful digital solutions with cutting-edge technology
+            Build production-ready SaaS, manage databases, and deploy AI solutions
+            <span className="block mt-2 bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent font-semibold">Deploy in days, not months</span>
           </motion.p>
 
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center px-4 sm:px-0"
           >
             <Link
               href="/portfolio"
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm sm:text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-base sm:text-lg font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-violet-300/50 transition-all duration-300 hover:scale-105 overflow-hidden"
             >
-              View Our Work
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="relative z-10">View Our Work</span>
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm sm:text-base font-semibold rounded-xl hover:bg-white/20 transition-colors"
+              className="group inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-white backdrop-blur-xl border-2 border-violet-200 text-gray-900 text-base sm:text-lg font-bold rounded-2xl hover:bg-violet-50 hover:border-violet-400 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               Get Started
-              <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-violet-600 group-hover:text-pink-600 transition-colors" />
             </Link>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Simple scroll indicator */}
+      {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 border-white/30 flex justify-center">
+        <div className="w-6 h-10 sm:w-7 sm:h-12 rounded-full border-2 border-violet-400 flex justify-center bg-white/50 backdrop-blur-sm shadow-lg">
           <motion.div
-            className="w-1 h-2 sm:h-3 bg-white/60 rounded-full mt-1.5 sm:mt-2"
+            className="w-1.5 h-3 sm:h-4 bg-violet-600 rounded-full mt-2"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />

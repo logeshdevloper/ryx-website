@@ -5,8 +5,6 @@ import { FooterMinimal } from "@/components/layout/footer-minimal"
 import { AnimatedCursor } from "@/components/ui/animated-cursor"
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion"
 import { useRef, useState, useEffect } from "react"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Sphere, Box, Torus, MeshDistortMaterial, Float, Stars } from "@react-three/drei"
 import Tilt from "react-parallax-tilt"
 import Image from "next/image"
 import Link from "next/link"
@@ -15,37 +13,6 @@ import {
   Play, Pause, ChevronLeft, ChevronRight, Layers,
   Sparkles, Code, Palette, Cpu, Star
 } from "lucide-react"
-import { Suspense } from "react"
-
-// 3D Background Scene
-function PortfolioScene() {
-  return (
-    <>
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[10, 10, 5]} intensity={0.5} />
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} enableRotate={false} />
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
-
-      <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <Torus args={[3, 0.5, 16, 32]} position={[-5, 2, -5]} rotation={[Math.PI / 4, 0, 0]}>
-          <MeshDistortMaterial color="#8B5CF6" attach="material" distort={0.6} speed={2} opacity={0.3} transparent />
-        </Torus>
-      </Float>
-
-      <Float speed={3} rotationIntensity={1.5} floatIntensity={1.5}>
-        <Box args={[2, 2, 2]} position={[5, -2, -5]} rotation={[0, Math.PI / 4, 0]}>
-          <MeshDistortMaterial color="#EC4899" attach="material" distort={0.4} speed={3} opacity={0.3} transparent />
-        </Box>
-      </Float>
-
-      <Float speed={4} rotationIntensity={2} floatIntensity={1}>
-        <Sphere args={[1.5, 32, 32]} position={[0, 0, -10]}>
-          <MeshDistortMaterial color="#10B981" attach="material" distort={0.5} speed={1.5} opacity={0.3} transparent />
-        </Sphere>
-      </Float>
-    </>
-  )
-}
 
 // Featured projects data
 const featuredProjects = [
@@ -224,30 +191,32 @@ export default function PortfolioPage() {
       <AnimatedCursor />
       <NavbarMinimal />
       <main ref={containerRef} className="min-h-screen">
-        {/* Hero Section with 3D Background */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* 3D Background */}
-          <div className="absolute inset-0 z-0">
-            <Canvas camera={{ position: [0, 0, 10] }}>
-              <Suspense fallback={null}>
-                <PortfolioScene />
-              </Suspense>
-            </Canvas>
+        {/* Hero Section with Floating Gradient Orbs */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+          {/* Beautiful floating gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Top left - Blue to Violet */}
+            <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-400 to-violet-500 rounded-full opacity-20 blur-3xl animate-float" />
+
+            {/* Top right - Purple to Pink */}
+            <div className="absolute top-20 -right-20 w-80 h-80 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full opacity-25 blur-3xl animate-float"
+                 style={{ animationDelay: '2s', animationDuration: '25s' }} />
+
+            {/* Center - Violet glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-300 to-fuchsia-400 rounded-full opacity-15 blur-3xl animate-pulse"
+                 style={{ animationDuration: '10s' }} />
+
+            {/* Bottom left - Pink to Orange */}
+            <div className="absolute bottom-0 left-20 w-72 h-72 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '4s', animationDuration: '30s' }} />
+
+            {/* Bottom right - Blue accent */}
+            <div className="absolute -bottom-20 -right-10 w-64 h-64 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '1s', animationDuration: '22s' }} />
           </div>
 
-          {/* Animated gradient overlay */}
-          <motion.div
-            className="absolute inset-0 z-10"
-            animate={{
-              background: [
-                "radial-gradient(circle at 20% 80%, rgba(139,92,246,0.3) 0%, transparent 50%)",
-                "radial-gradient(circle at 80% 20%, rgba(236,72,153,0.3) 0%, transparent 50%)",
-                "radial-gradient(circle at 50% 50%, rgba(16,185,129,0.3) 0%, transparent 50%)",
-                "radial-gradient(circle at 20% 80%, rgba(139,92,246,0.3) 0%, transparent 50%)",
-              ],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          />
+          {/* Subtle light overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-transparent to-purple-50/30 z-10" />
 
           {/* Hero Content */}
           <div className="container mx-auto px-6 md:px-12 relative z-20 text-center">
@@ -258,17 +227,17 @@ export default function PortfolioPage() {
             >
               {/* Badge */}
               <motion.div
-                className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/10 backdrop-blur-xl rounded-full border border-white/20"
+                className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white/80 backdrop-blur-xl rounded-full border border-violet-100 shadow-xl"
                 whileHover={{ scale: 1.05 }}
               >
-                <Sparkles className="w-4 h-4 text-violet-400" />
-                <span className="text-sm font-semibold text-white">Featured Portfolio</span>
-                <Sparkles className="w-4 h-4 text-violet-400" />
+                <Sparkles className="w-4 h-4 text-violet-600" />
+                <span className="text-sm font-semibold bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Featured Portfolio</span>
+                <Sparkles className="w-4 h-4 text-pink-600" />
               </motion.div>
 
               {/* Main Title */}
               <motion.h1
-                className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-white"
+                className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-gray-900"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -289,7 +258,7 @@ export default function PortfolioPage() {
                   Creative Works
                 </motion.span>
                 <br />
-                <span className="text-5xl md:text-6xl lg:text-7xl opacity-90">
+                <span className="text-5xl md:text-6xl lg:text-7xl">
                   That Inspire Innovation
                 </span>
               </motion.h1>
@@ -299,7 +268,7 @@ export default function PortfolioPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12"
+                className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-12"
               >
                 Explore our collection of cutting-edge projects showcasing excellence in design, development, and innovation
               </motion.p>
@@ -319,16 +288,16 @@ export default function PortfolioPage() {
                   <motion.div
                     key={stat.label}
                     whileHover={{ scale: 1.1 }}
-                    className="text-white"
+                    className="text-gray-900"
                   >
                     <motion.div
-                      className="text-4xl font-bold mb-2"
+                      className="text-4xl font-bold mb-2 bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent"
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
                     >
                       {stat.value}
                     </motion.div>
-                    <div className="text-sm text-gray-400">{stat.label}</div>
+                    <div className="text-sm text-gray-700">{stat.label}</div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -340,9 +309,9 @@ export default function PortfolioPage() {
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <div className="w-6 h-10 rounded-full border-2 border-white/30 flex justify-center">
+              <div className="w-6 h-10 rounded-full border-2 border-violet-400 flex justify-center bg-white/50 backdrop-blur-sm shadow-lg">
                 <motion.div
-                  className="w-1 h-3 bg-white/60 rounded-full mt-2"
+                  className="w-1 h-3 bg-violet-600 rounded-full mt-2"
                   animate={{ y: [0, 15, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
@@ -352,7 +321,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* Category Filter */}
-        <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-950 relative overflow-hidden">
+        <section className="py-20 bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50 relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -367,10 +336,10 @@ export default function PortfolioPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => setSelectedCategory(category.name)}
-                  className={`group relative px-6 py-3 rounded-full font-semibold transition-all ${
+                  className={`group relative px-6 py-3 rounded-full font-semibold transition-all border ${
                     selectedCategory === category.name
-                      ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white'
-                      : 'bg-white/10 text-white hover:bg-white/20'
+                      ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white border-transparent shadow-xl shadow-violet-200/50'
+                      : 'bg-white/80 backdrop-blur-md text-gray-900 border-violet-100 hover:border-violet-300 hover:bg-white'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -394,7 +363,7 @@ export default function PortfolioPage() {
         </section>
 
         {/* Featured Projects Grid */}
-        <section className="py-32 bg-gray-950 relative overflow-hidden">
+        <section className="py-32 bg-gradient-to-br from-pink-50 to-orange-50 relative overflow-hidden">
           {/* Animated particles */}
           <motion.div style={{ y }} className="absolute inset-0">
             {[...Array(30)].map((_, i) => (
@@ -426,10 +395,12 @@ export default function PortfolioPage() {
               viewport={{ once: true }}
               className="text-center mb-20"
             >
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-                Featured Projects
+              <h2 className="text-5xl md:text-6xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
+                  Featured Projects
+                </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto">
                 Handpicked selection of our best work across various industries
               </p>
             </motion.div>
@@ -454,7 +425,7 @@ export default function PortfolioPage() {
                     scale={1.02}
                   >
                     <motion.div
-                      className="relative bg-gray-900 rounded-3xl overflow-hidden"
+                      className="relative bg-white/80 backdrop-blur-md rounded-3xl overflow-hidden border border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-200/50 transition-all duration-300"
                       whileHover={{ y: -10 }}
                       style={{
                         transformStyle: "preserve-3d",
@@ -480,12 +451,12 @@ export default function PortfolioPage() {
 
                         {/* Category Badge */}
                         <motion.div
-                          className="absolute top-6 left-6 px-4 py-2 bg-black/50 backdrop-blur-xl rounded-full"
+                          className="absolute top-6 left-6 px-4 py-2 bg-white/90 backdrop-blur-xl rounded-full border border-violet-100"
                           initial={{ x: -100, opacity: 0 }}
                           animate={hoveredProject === project.id ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <span className="text-sm font-semibold text-white">{project.category}</span>
+                          <span className="text-sm font-semibold bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">{project.category}</span>
                         </motion.div>
 
                         {/* Play Button (for video preview) */}
@@ -527,11 +498,11 @@ export default function PortfolioPage() {
                           <h3 className={`text-3xl font-bold mb-2 bg-gradient-to-r ${project.gradient} bg-clip-text text-transparent`}>
                             {project.title}
                           </h3>
-                          <p className="text-gray-400 text-sm">for {project.client}</p>
+                          <p className="text-gray-700 text-sm">for {project.client}</p>
                         </div>
 
                         {/* Description */}
-                        <p className="text-gray-300 mb-6">
+                        <p className="text-gray-700 mb-6">
                           {project.description}
                         </p>
 
@@ -552,7 +523,7 @@ export default function PortfolioPage() {
                               >
                                 {value}
                               </motion.div>
-                              <div className="text-xs text-gray-500 capitalize">{key}</div>
+                              <div className="text-xs text-gray-700 capitalize">{key}</div>
                             </motion.div>
                           ))}
                         </div>
@@ -561,7 +532,7 @@ export default function PortfolioPage() {
                         <div className="flex gap-4">
                           <motion.a
                             href={project.link}
-                            className={`flex-1 py-3 text-center font-semibold rounded-full bg-gradient-to-r ${project.gradient} text-white`}
+                            className={`flex-1 py-3 text-center font-semibold rounded-full bg-gradient-to-r ${project.gradient} text-white shadow-lg hover:shadow-xl transition-all`}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                           >
@@ -569,19 +540,19 @@ export default function PortfolioPage() {
                           </motion.a>
                           <motion.a
                             href={project.github}
-                            className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
+                            className="p-3 bg-violet-100 hover:bg-violet-200 rounded-full transition-colors border border-violet-200"
                             whileHover={{ scale: 1.1, rotate: 360 }}
                             whileTap={{ scale: 0.9 }}
                           >
-                            <Github className="w-5 h-5 text-white" />
+                            <Github className="w-5 h-5 text-violet-600" />
                           </motion.a>
                           <motion.a
                             href={project.live}
-                            className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full transition-colors"
+                            className="p-3 bg-violet-100 hover:bg-violet-200 rounded-full transition-colors border border-violet-200"
                             whileHover={{ scale: 1.1, rotate: -360 }}
                             whileTap={{ scale: 0.9 }}
                           >
-                            <Globe className="w-5 h-5 text-white" />
+                            <Globe className="w-5 h-5 text-violet-600" />
                           </motion.a>
                         </div>
                       </div>
@@ -643,18 +614,15 @@ export default function PortfolioPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-br from-violet-600 via-pink-600 to-orange-600 relative overflow-hidden">
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: "60px 60px",
-            }}
-          />
+        <section className="py-32 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 relative overflow-hidden">
+          {/* Floating gradient orbs */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full opacity-20 blur-3xl animate-float" />
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-br from-pink-400 to-orange-300 rounded-full opacity-20 blur-3xl animate-float"
+                 style={{ animationDelay: '3s' }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-blue-300 to-cyan-400 rounded-full opacity-15 blur-3xl animate-pulse"
+                 style={{ animationDuration: '8s' }} />
+          </div>
 
           <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
             <motion.div
@@ -662,16 +630,18 @@ export default function PortfolioPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 text-white">
-                Have a Project in Mind?
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8">
+                <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
+                  Have a Project in Mind?
+                </span>
               </h2>
-              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12">
+              <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto mb-12">
                 Let's collaborate to bring your vision to life with cutting-edge technology and creative excellence
               </p>
               <motion.a
                 href="/contact"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-white text-violet-600 font-bold text-lg rounded-full shadow-2xl group"
-                whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(255, 255, 255, 0.3)" }}
+                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-violet-600 to-pink-600 text-white font-bold text-lg rounded-full shadow-2xl group"
+                whileHover={{ scale: 1.05, boxShadow: "0 25px 50px rgba(139, 92, 246, 0.4)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 <span>Start Your Project</span>

@@ -58,8 +58,14 @@ const projects = [
 
 export function PortfolioSimple() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12">
+    <section className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-b from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+      {/* Gradient Orbs Background */}
+      <div className="absolute inset-0 overflow-hidden opacity-40">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-violet-300 to-pink-300 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-blue-300 to-purple-300 rounded-full blur-3xl" />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -68,11 +74,11 @@ export function PortfolioSimple() {
           className="text-center mb-10 sm:mb-12 md:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
               Featured Projects
             </span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto px-4 sm:px-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-2xl mx-auto px-4 sm:px-0">
             Showcasing our best work across various industries
           </p>
         </motion.div>
@@ -86,7 +92,7 @@ export function PortfolioSimple() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-gray-800 rounded-2xl overflow-hidden hover:shadow-xl transition-all"
+              className="group relative bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-violet-200/50 transition-all border border-violet-100"
             >
               {/* Image */}
               <div className="relative h-40 sm:h-48 overflow-hidden">
@@ -118,14 +124,14 @@ export function PortfolioSimple() {
 
               {/* Content */}
               <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 group-hover:text-violet-400 transition-colors">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 group-hover:text-violet-600 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 text-xs sm:text-sm mb-3 sm:mb-4">{project.description}</p>
+                <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4">{project.description}</p>
 
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center gap-1 text-violet-400 hover:text-violet-300 transition-colors text-sm font-semibold"
+                  className="inline-flex items-center gap-1 text-violet-600 hover:text-pink-600 transition-colors text-sm font-semibold"
                 >
                   View Project
                   <ArrowUpRight className="w-4 h-4" />
@@ -144,7 +150,7 @@ export function PortfolioSimple() {
         >
           <Link
             href="/portfolio"
-            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm sm:text-base font-semibold rounded-xl hover:shadow-lg transition-shadow"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm sm:text-base font-semibold rounded-xl hover:shadow-lg hover:shadow-violet-300/50 transition-all hover:scale-105"
           >
             View All Projects
             <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />

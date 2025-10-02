@@ -1,20 +1,28 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Performance optimizations for Lighthouse 90+
+  // Performance optimizations for Lighthouse 95+
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@radix-ui/react-accordion', '@radix-ui/react-dialog'],
+    webpackBuildWorker: true,
+    staleTimes: {
+      dynamic: 0,
+      static: 180,
+    },
   },
 
-  // Disable error overlay
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Dev indicators configuration
   devIndicators: {
-    appIsrStatus: false,
-    buildActivity: false,
-    buildActivityPosition: 'bottom-right' as const,
+    position: 'bottom-right' as const,
   },
 
-  // Disable React Strict Mode to reduce console warnings
-  reactStrictMode: false,
+  // Enable React Strict Mode for better development experience
+  reactStrictMode: true,
   
   // 🚨 CRITICAL: Disable ESLint during builds for deployment
   eslint: {
@@ -53,10 +61,6 @@ const nextConfig: NextConfig = {
           {
             key: 'X-Frame-Options',
             value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
           },
           {
             key: 'X-Content-Type-Options',

@@ -30,20 +30,22 @@ const socialLinks = [
 
 export function FooterMinimal() {
   return (
-    <footer className="relative bg-gradient-to-b from-gray-900 to-gray-950 text-white overflow-hidden">
-      {/* Simple animated background */}
-      <div className="absolute inset-0 overflow-hidden opacity-30">
+    <footer className="relative bg-gradient-to-b from-purple-50 via-pink-50 to-blue-50 text-gray-900 overflow-hidden">
+      {/* Colorful gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden opacity-40">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-violet-300 to-pink-300 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-blue-300 to-purple-300 rounded-full blur-3xl" />
         {[...Array(10)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-violet-400/30 rounded-full"
+            className="absolute w-2 h-2 bg-violet-400/40 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
               y: [0, -20, 0],
-              opacity: [0, 0.5, 0],
+              opacity: [0.3, 0.7, 0.3],
             }}
             transition={{
               duration: 3 + Math.random() * 2,
@@ -75,20 +77,20 @@ export function FooterMinimal() {
                   </span>
                 </motion.div>
               </Link>
-              <p className="text-gray-400 mb-4 text-sm">
+              <p className="text-gray-600 mb-4 text-sm">
                 Transforming ideas into digital reality.
               </p>
               {/* Contact Info */}
               <div className="space-y-2">
-                <a href="mailto:ryxdevsolution@gmail.com" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                <a href="mailto:ryxdevsolution@gmail.com" className="flex items-center gap-2 text-gray-600 hover:text-violet-600 transition-colors text-sm">
                   <Mail className="w-4 h-4" />
                   <span>ryxdevsolution@gmail.com</span>
                 </a>
-                <a href="tel:+918672580008" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                <a href="tel:+918672580008" className="flex items-center gap-2 text-gray-600 hover:text-violet-600 transition-colors text-sm">
                   <Phone className="w-4 h-4" />
                   <span>+91 86725 80008</span>
                 </a>
-                <a href="tel:+916374853277" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
+                <a href="tel:+916374853277" className="flex items-center gap-2 text-gray-600 hover:text-violet-600 transition-colors text-sm">
                   <Phone className="w-4 h-4" />
                   <span>+91 63748 53277</span>
                 </a>
@@ -102,7 +104,7 @@ export function FooterMinimal() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h4 className="text-sm font-semibold mb-4 text-white">
+              <h4 className="text-sm font-semibold mb-4 text-gray-900">
                 Services
               </h4>
               <ul className="space-y-2">
@@ -110,7 +112,7 @@ export function FooterMinimal() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                      className="text-sm text-gray-600 hover:text-violet-600 transition-colors"
                     >
                       {link.name}
                     </Link>
@@ -126,7 +128,7 @@ export function FooterMinimal() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h4 className="text-sm font-semibold mb-4 text-white">
+              <h4 className="text-sm font-semibold mb-4 text-gray-900">
                 Company
               </h4>
               <ul className="space-y-2">
@@ -134,7 +136,7 @@ export function FooterMinimal() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                      className="text-sm text-gray-600 hover:text-violet-600 transition-colors"
                     >
                       {link.name}
                     </Link>
@@ -150,7 +152,7 @@ export function FooterMinimal() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <h4 className="text-sm font-semibold mb-4 text-white">
+              <h4 className="text-sm font-semibold mb-4 text-gray-900">
                 Follow Us
               </h4>
               <div className="flex gap-3">
@@ -160,7 +162,7 @@ export function FooterMinimal() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-all"
+                    className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-gray-600 hover:text-violet-600 hover:bg-white shadow-sm border border-violet-100 transition-all"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.95 }}
                     aria-label={social.label}
@@ -174,22 +176,22 @@ export function FooterMinimal() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800">
+        <div className="border-t border-violet-200">
           <div className="container mx-auto px-4 sm:px-6 md:px-12 py-6">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-              <p className="text-xs md:text-sm text-gray-400">
+              <p className="text-xs md:text-sm text-gray-600">
                 © {new Date().getFullYear()} RYX. All rights reserved.
               </p>
               <div className="flex gap-6">
                 <Link
                   href="/privacy"
-                  className="text-xs md:text-sm text-gray-400 hover:text-white transition-colors"
+                  className="text-xs md:text-sm text-gray-600 hover:text-violet-600 transition-colors"
                 >
                   Privacy
                 </Link>
                 <Link
                   href="/terms"
-                  className="text-xs md:text-sm text-gray-400 hover:text-white transition-colors"
+                  className="text-xs md:text-sm text-gray-600 hover:text-violet-600 transition-colors"
                 >
                   Terms
                 </Link>

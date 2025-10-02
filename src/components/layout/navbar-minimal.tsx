@@ -33,10 +33,10 @@ export function NavbarMinimal() {
   return (
     <>
       <nav className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-700",
+        "fixed top-0 w-full z-50 transition-all duration-300",
         isScrolled
-          ? "bg-gradient-to-b from-background/95 to-background/80 backdrop-blur-xl border-b border-border/30 shadow-lg"
-          : "bg-gradient-to-b from-background/20 to-transparent backdrop-blur-sm"
+          ? "bg-white/90 backdrop-blur-xl border-b border-violet-100 shadow-lg shadow-violet-100/50"
+          : "bg-white/60 backdrop-blur-md border-b border-violet-50"
       )}>
         <div className="container mx-auto px-4 sm:px-6 md:px-12">
           <div className="flex items-center justify-between h-20">
@@ -64,11 +64,12 @@ export function NavbarMinimal() {
                   <li key={item.name}>
                     <Link
                       href={item.href}
+                      prefetch={true}
                       className={cn(
-                        "relative text-sm font-medium tracking-wide transition-all duration-300 px-1",
+                        "relative text-sm font-semibold tracking-wide transition-all duration-150 px-1",
                         isActive(item.href)
                           ? "text-transparent bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text"
-                          : "text-muted-foreground hover:text-foreground"
+                          : "text-gray-700 hover:text-gray-900"
                       )}
                     >
                       {item.name}
@@ -76,7 +77,7 @@ export function NavbarMinimal() {
                         <motion.div
                           className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-violet-600 to-pink-600"
                           layoutId="navbar-indicator"
-                          transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
                         />
                       )}
                     </Link>
@@ -89,7 +90,7 @@ export function NavbarMinimal() {
             <div className="md:hidden flex items-center">
               <motion.button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative p-2 rounded-lg bg-gradient-to-r from-violet-600/10 to-pink-600/10 backdrop-blur-sm border border-white/10"
+                className="relative p-2 rounded-lg bg-white border-2 border-violet-200 shadow-md hover:shadow-lg hover:border-violet-300"
                 aria-label="Toggle menu"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -127,37 +128,38 @@ export function NavbarMinimal() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 bg-gradient-to-br from-background via-background to-violet-950/10 md:hidden backdrop-blur-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 md:hidden backdrop-blur-xl"
           >
             <motion.div
-              initial={{ y: -20, opacity: 0 }}
+              initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              exit={{ y: -10, opacity: 0 }}
+              transition={{ duration: 0.15 }}
               className="flex flex-col items-center justify-center h-full"
             >
               <ul className="space-y-6 sm:space-y-8 text-center px-4">
                 {navigation.map((item, index) => (
                   <motion.li
                     key={item.name}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 + 0.2 }}
+                    transition={{ delay: index * 0.05 + 0.1, duration: 0.2 }}
                   >
                     <Link
                       href={item.href}
+                      prefetch={true}
                       onClick={() => setIsOpen(false)}
                       className="group relative inline-block"
                     >
                       <span className={cn(
-                        "text-2xl sm:text-3xl font-bold tracking-wide block py-2 transition-all duration-300",
+                        "text-2xl sm:text-3xl font-bold tracking-wide block py-2 transition-all duration-200",
                         isActive(item.href)
                           ? "text-transparent bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text"
-                          : "text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-pink-600 hover:bg-clip-text"
+                          : "text-gray-800 hover:text-transparent hover:bg-gradient-to-r hover:from-violet-600 hover:to-pink-600 hover:bg-clip-text"
                       )}>
                         {item.name}
                       </span>
@@ -165,7 +167,7 @@ export function NavbarMinimal() {
                         className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-violet-600 to-pink-600"
                         initial={{ width: 0 }}
                         whileHover={{ width: "100%" }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.2 }}
                       />
                     </Link>
                   </motion.li>

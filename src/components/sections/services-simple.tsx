@@ -51,57 +51,82 @@ const services = [
 
 export function ServicesSimple() {
   return (
-    <section className="py-12 sm:py-16 md:py-20 bg-gray-950">
-      <div className="container mx-auto px-4 sm:px-6 md:px-12">
+    <section className="relative py-16 sm:py-20 md:py-28 bg-gradient-to-b from-purple-50 via-pink-50 to-orange-50 overflow-hidden">
+      {/* Beautiful background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-violet-300 to-purple-400 rounded-full opacity-20 blur-3xl animate-float" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-br from-pink-300 to-rose-400 rounded-full opacity-20 blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-br from-blue-200 to-cyan-300 rounded-full opacity-15 blur-3xl animate-pulse" style={{ animationDuration: '12s' }} />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-12 md:mb-16"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-            <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-              Our Services
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="inline-block px-5 py-2.5 mb-6 text-sm font-bold bg-white border-2 border-violet-300 rounded-full shadow-lg shadow-violet-100 bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent"
+          >
+            What We Offer
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Premium Services
             </span>
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto px-4 sm:px-0">
-            Comprehensive digital solutions tailored to your needs
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto px-4 sm:px-0 font-light">
+            Transform your business with cutting-edge digital solutions
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-gray-900 rounded-2xl p-6 sm:p-8 hover:bg-gray-800 transition-colors"
+              className="group relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-10 hover:scale-[1.03] transition-all duration-300 border-2 border-violet-100 hover:border-violet-300 hover:shadow-2xl hover:shadow-violet-200/50 overflow-hidden"
             >
-              {/* Icon */}
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 mb-4 sm:mb-6 bg-gradient-to-r ${service.gradient} rounded-xl flex items-center justify-center`}>
-                <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              {/* Gradient background on hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+
+              {/* Icon with gradient background */}
+              <div className="relative mb-6">
+                <div className={`w-16 h-16 sm:w-18 sm:h-18 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center shadow-xl group-hover:shadow-2xl group-hover:scale-110 transition-all duration-300`}>
+                  <service.icon className="w-8 h-8 sm:w-9 sm:h-9 text-white" />
+                </div>
               </div>
 
               {/* Content */}
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-3">{service.title}</h3>
-              <p className="text-sm sm:text-base text-gray-400 mb-3 sm:mb-4">{service.description}</p>
+              <h3 className="relative text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                {service.title}
+              </h3>
+              <p className="relative text-base sm:text-lg text-gray-600 mb-6 font-normal leading-relaxed">
+                {service.description}
+              </p>
 
               {/* Features */}
-              <ul className="space-y-2">
+              <ul className="relative space-y-3">
                 {service.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-500">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    {feature}
+                  <li key={i} className="flex items-center gap-3 text-sm sm:text-base text-gray-700 group-hover:text-gray-900 transition-colors">
+                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                    <span className="font-medium">{feature}</span>
                   </li>
                 ))}
               </ul>
 
-              {/* Hover gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${service.gradient} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity`} />
+              {/* Decorative corner */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-violet-200/40 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </motion.div>
           ))}
         </div>
@@ -111,14 +136,16 @@ export function ServicesSimple() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          transition={{ duration: 0.6 }}
+          className="text-center mt-16 sm:mt-20"
         >
           <Link
             href="/services"
-            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm sm:text-base font-semibold rounded-xl hover:shadow-lg transition-shadow"
+            className="group relative inline-flex items-center justify-center gap-3 px-10 sm:px-12 py-5 sm:py-6 bg-gradient-to-r from-violet-600 to-pink-600 text-white text-lg sm:text-xl font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-violet-300/50 transition-all duration-300 hover:scale-105 overflow-hidden"
           >
-            View All Services
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span className="relative z-10">Explore All Services</span>
+            <ArrowRight className="w-6 h-6 relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-violet-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </Link>
         </motion.div>
       </div>
